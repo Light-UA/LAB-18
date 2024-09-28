@@ -1,0 +1,114 @@
+using System;
+
+// Клас Point (двовимірна точка)
+public class Point
+{
+    // Поля класу Point
+    protected int x;
+    protected int y;
+
+    // Конструктор без параметрів
+    public Point()
+    {
+        x = 0;
+        y = 0;
+    }
+
+    // Конструктор з параметрами
+    public Point(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    // Метод для виведення інформації про точку
+    public virtual void DisplayInfo()
+    {
+        Console.WriteLine($"Точка в двовимірному просторі: X = {x}, Y = {y}");
+    }
+}
+
+// Клас Point3D (трьохвимірна точка), успадковує Point
+public class Point3D : Point
+{
+    // Додаткове поле для третьої координати
+    private int z;
+
+    // Конструктор без параметрів
+    public Point3D() : base()
+    {
+        z = 0;
+    }
+
+    // Конструктор з параметрами
+    public Point3D(int x, int y, int z) : base(x, y)
+    {
+        this.z = z;
+    }
+
+    // Метод для виведення інформації про тривимірну точку
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"Точка в тривимірному просторі: X = {x}, Y = {y}, Z = {z}");
+    }
+
+    // Метод для отримання значення координати X
+    public int GetX()
+    {
+        return x;
+    }
+
+    // Метод для додавання координат
+    public static Point3D SumPoints(Point3D[] points)
+    {
+        int sumX = 0, sumY = 0, sumZ = 0;
+        foreach (var point in points)
+        {
+            sumX += point.x;
+            sumY += point.y;
+            sumZ += point.z;
+        }
+        return new Point3D(sumX, sumY, sumZ);
+    }
+}
+
+// Основна програма
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Створення одного об'єкта Point3D
+        Point3D point1 = new Point3D(1, 2, 3);
+        point1.DisplayInfo();
+
+        // Створення масиву об'єктів Point3D
+        Point3D[] points = new Point3D[3];
+        points[0] = new Point3D(1, 2, 3);
+        points[1] = new Point3D(4, 5, 6);
+        points[2] = new Point3D(7, 8, 9);
+
+        // Виведення інформації про кожну точку
+        Console.WriteLine("\nМасив точок:");
+        foreach (var point in points)
+        {
+            point.DisplayInfo();
+        }
+
+        // Підрахунок суми координати X усіх точок
+        int sumX = 0;
+        foreach (var point in points)
+        {
+            sumX += point.GetX();
+        }
+        Console.WriteLine($"\nСума координати X всіх точок: {sumX}");
+
+        // Створення нової точки, координати якої дорівнюють сумі координат масиву точок
+        Point3D sumPoint = Point3D.SumPoints(points);
+        Console.WriteLine("\nНова точка, сума координат всіх точок масиву:");
+        sumPoint.DisplayInfo();
+
+        Console.ReadLine();
+    }
+     
+    
+}
