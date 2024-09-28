@@ -1,0 +1,102 @@
+using System;
+
+// Клас Person (базовий клас для людей)
+public class Person
+{
+    // Поля класу Person
+    protected string lastName;
+    protected int height;
+    protected int weight;
+    protected int yearOfBirth;
+
+    // Конструктор без параметрів
+    public Person()
+    {
+        lastName = "Unknown";
+        height = 0;
+        weight = 0;
+        yearOfBirth = 0;
+    }
+
+    // Конструктор з параметрами
+    public Person(string lastName, int height, int weight, int yearOfBirth)
+    {
+        this.lastName = lastName;
+        this.height = height;
+        this.weight = weight;
+        this.yearOfBirth = yearOfBirth;
+    }
+
+    // Властивість для доступу до поля lastName
+    public string LastName
+    {
+        get { return lastName; }
+        set { lastName = value; }
+    }
+
+    // Віртуальний метод для виведення інформації про особу
+    public virtual void DisplayInfo()
+    {
+        Console.WriteLine($"Прізвище: {lastName}, Зріст: {height}, Вага: {weight}, Рік народження: {yearOfBirth}");
+    }
+}
+
+// Клас Player (гравець), успадковує Person
+public class Player : Person
+{
+    // Додаткові поля для класу Player
+    private int gamesPlayed;
+    private int goalsScored;
+
+    // Конструктор без параметрів
+    public Player() : base()
+    {
+        gamesPlayed = 0;
+        goalsScored = 0;
+    }
+
+    // Конструктор з параметрами
+    public Player(string lastName, int height, int weight, int yearOfBirth, int gamesPlayed, int goalsScored)
+        : base(lastName, height, weight, yearOfBirth)
+    {
+        this.gamesPlayed = gamesPlayed;
+        this.goalsScored = goalsScored;
+    }
+
+    // Перевизначення методу для виведення інформації про гравця
+    public override void DisplayInfo()
+    {
+        base.DisplayInfo();
+        Console.WriteLine($"Кількість ігор: {gamesPlayed}, Забитих м'ячів: {goalsScored}");
+    }
+
+    // Метод для підрахунку середньої кількості забитих м'ячів за гру
+    public double AverageGoalsPerGame()
+    {
+        if (gamesPlayed == 0) return 0;
+        return (double)goalsScored / gamesPlayed;
+    }
+}
+
+// Основна програма
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Створення трьох об'єктів Player
+        Player player1 = new Player("Smith", 180, 75, 1990, 100, 50);
+        Player player2 = new Player("Johnson", 175, 70, 1985, 150, 60);
+        Player player3 = new Player("Williams", 190, 80, 1995, 120, 40);
+
+        // Виведення інформації про кожного гравця
+        Console.WriteLine("Інформація про гравців:");
+        player1.DisplayInfo();
+        player2.DisplayInfo();
+        player3.DisplayInfo();
+
+        // Підрахунок середньої кількості забитих м'ячів за гру для одного з гравців
+        Console.WriteLine($"\nСередня кількість забитих м'ячів за гру для {player1.LastName}: {player1.AverageGoalsPerGame()}");
+
+        Console.ReadLine();
+    }
+}
